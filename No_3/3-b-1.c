@@ -49,6 +49,65 @@ void get_data(void)
     //4変数をunsigned intに結合
     unsigned int size = combine_4bytes(header, 2);
     printf("%dバイト\n", size);
+
+    printf("\n< 予約領域 >\n");
+    print_header(header, 6, 4);
+
+    printf("\n< オフセット >\n");
+    print_header(header, 10, 4);
+
+    unsigned int offset = combine_4bytes(header, 10);
+    printf("%dバイト\n", offset);
+
+    printf("\n< 情報ヘッダサイズ >\n");
+    print_header(header, 14, 4);
+
+    printf("\n< 画像の幅 >\n");
+    print_header(header, 18, 4);
+
+    unsigned int width = combine_4bytes(header, 18);
+    printf("%d 画素\n", width);
+
+    printf("\n< 画像の高さ >\n");
+    print_header(header, 22, 4);
+
+    unsigned int height = combine_4bytes(header, 22);
+    printf("%d ライン\n", height);
+
+    printf("\n< 色プレーン数 >\n");
+    print_header(header, 26, 2);
+
+    printf("\n< 1画素あたりのビット数 >\n");
+    print_header(header, 28, 2);
+    
+    //2変数を結合
+    unsigned int bits = 256 * header[29] + header[28];
+    printf("%d ビット\n",bits);
+
+    printf("\n< 圧縮方式 >\n");
+    print_header(header, 30, 4);
+
+    printf("\n< 画像データサイズ >\n");
+    print_header(header, 34, 4);
+
+    printf("\n< 水平解像度 >\n");
+    print_header(header, 38, 4);
+
+    printf("\n< 垂直解像度 >\n");
+    print_header(header, 42, 4);
+
+    printf("\n< 色数 >\n");
+    print_header(header, 46, 4);
+
+    printf("\n< 重要な色数 >\n");
+    print_header(header, 50, 4);
+
+    printf("\n< 挿入ビット数 >\n");
+    int insert_bits = size - offset - width * height * (bits / 8);
+    printf("%d バイト\n", insert_bits);
+        
+    fclose(fp);
+    printf("\nファイルをクローズしました.\n");
 }
 
 //配列の4バイトを結合する
