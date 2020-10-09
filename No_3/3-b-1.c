@@ -15,8 +15,6 @@ int main(void)
 void get_data(void)
 {
     char filename[20];
-    //画像データ
-    unsigned char imgin[3][512][512];
     int i, c;
     FILE *fp;
 
