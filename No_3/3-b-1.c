@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-unsigned int combine_4bytes(unsigned char data[], int start);
+int combine_4bytes(unsigned char data[], int start);
 void print_header(unsigned char data[], int start, int len);
 
 unsigned char header[54];
@@ -15,6 +15,8 @@ int main(void)
 void get_data(void)
 {
     char filename[20];
+    //画像データ
+    unsigned char imgin[3][512][512];
     int i, c;
     FILE *fp;
 
@@ -47,7 +49,7 @@ void get_data(void)
     print_header(header, 2, 4);
 
     //4変数をunsigned intに結合
-    unsigned int size = combine_4bytes(header, 2);
+    int size = combine_4bytes(header, 2);
     printf("%dバイト\n", size);
 
     printf("\n< 予約領域 >\n");
@@ -56,7 +58,7 @@ void get_data(void)
     printf("\n< オフセット >\n");
     print_header(header, 10, 4);
 
-    unsigned int offset = combine_4bytes(header, 10);
+    int offset = combine_4bytes(header, 10);
     printf("%dバイト\n", offset);
 
     printf("\n< 情報ヘッダサイズ >\n");
@@ -65,13 +67,13 @@ void get_data(void)
     printf("\n< 画像の幅 >\n");
     print_header(header, 18, 4);
 
-    unsigned int width = combine_4bytes(header, 18);
+    int width = combine_4bytes(header, 18);
     printf("%d 画素\n", width);
 
     printf("\n< 画像の高さ >\n");
     print_header(header, 22, 4);
 
-    unsigned int height = combine_4bytes(header, 22);
+    int height = combine_4bytes(header, 22);
     printf("%d ライン\n", height);
 
     printf("\n< 色プレーン数 >\n");
@@ -81,7 +83,7 @@ void get_data(void)
     print_header(header, 28, 2);
     
     //2変数を結合
-    unsigned int bits = 256 * header[29] + header[28];
+    int bits = 256 * header[29] + header[28];
     printf("%d ビット\n",bits);
 
     printf("\n< 圧縮方式 >\n");
@@ -111,16 +113,20 @@ void get_data(void)
 }
 
 //配列の4バイトを結合する
-unsigned int combine_4bytes(unsigned char data[], int start)
+int combine_4bytes(unsigned char data[], int start)
 {
-    unsigned int result = 0, tmp;
+    int result = 0,factor = 1, tmp;
     
-    for(int i=0; i<4; i++)
+    for(int i=3; i>=0; i--)
     {
-        tmp = (unsigned int)data[3-i + start];
-        result = result | tmp << ((3-i) * 8);
+        tmp = data[start + i];
+        for(int j=i; j>0; j--)
+        {
+            factor *= 256;
+        }
+        result += factor * tmp;
+        factor = 1;
     }
-
     return result;
 }
 
