@@ -123,7 +123,7 @@ void get_data(void)
             for (int k = 0; k < 3; k++) //BGR
             {
                 c = fgetc(fp);
-                imgin[2 - k][j][i] = (unsigned char)c;
+                imgin[k][j][i] = (unsigned char)c;
             }
         }
     }
@@ -142,7 +142,7 @@ void processing(void)
         {
             for (int j = 0; j < width; j++)
             {
-                printf("%02x ", imgin[0][j][i]);
+                printf("%02x ", imgin[2][j][i]);
             }
             printf("\n");
         }
@@ -162,7 +162,7 @@ void processing(void)
         {
             for (int j = 0; j < width; j++)
             {
-                printf("%02x ", imgin[2][j][i]);
+                printf("%02x ", imgin[0][j][i]);
             }
             printf("\n");
         }
@@ -179,8 +179,7 @@ void processing(void)
         {
             for (int k = 0; k < 3; k++) //BGR
             {
-                //RGBをBGRに反転
-                imgout[k][j][i] = imgin[2 - k][j][i];
+                imgout[k][j][i] = imgin[k][j][i];
             }
         }
     }
@@ -217,7 +216,6 @@ void put_data(void)
         {
             for (int k = 0; k < 3; k++) //BGR
             {
-                //RGBをBGRに反転
                 fputc(imgout[k][j][i], fp);
             }
         }
