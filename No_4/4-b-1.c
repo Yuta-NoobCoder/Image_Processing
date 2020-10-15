@@ -18,6 +18,7 @@ int main(void)
 {
     get_data();
     processing();
+    put_data();
     return 0;
 }
 
@@ -134,34 +135,41 @@ void get_data(void)
 void processing(void)
 {
 
-    printf("\n< R 信号 >\n");
-    for (int i = 0; i < height; i++)
+    if (height <= 16 && width <= 16)
     {
-        for (int j = 0; j < width; j++)
+        printf("\n< R 信号 >\n");
+        for (int i = 0; i < height; i++)
         {
-            printf("%02x ", imgin[0][j][i]);
+            for (int j = 0; j < width; j++)
+            {
+                printf("%02x ", imgin[0][j][i]);
+            }
+            printf("\n");
         }
-        printf("\n");
-    }
 
-    printf("\n< G 信号 >\n");
-    for (int i = 0; i < height; i++)
-    {
-        for (int j = 0; j < width; j++)
+        printf("\n< G 信号 >\n");
+        for (int i = 0; i < height; i++)
         {
-            printf("%02x ", imgin[1][j][i]);
+            for (int j = 0; j < width; j++)
+            {
+                printf("%02x ", imgin[1][j][i]);
+            }
+            printf("\n");
         }
-        printf("\n");
-    }
 
-    printf("\n< B 信号 >\n");
-    for (int i = 0; i < height; i++)
-    {
-        for (int j = 0; j < width; j++)
+        printf("\n< B 信号 >\n");
+        for (int i = 0; i < height; i++)
         {
-            printf("%02x ", imgin[2][i][j]);
+            for (int j = 0; j < width; j++)
+            {
+                printf("%02x ", imgin[2][i][j]);
+            }
+            printf("\n");
         }
-        printf("\n");
+    }
+    else
+    {
+        printf("\n画像が大きすぎるためデータ表示を省略します.\n");
     }
 
     //入力画像をimgoutに格納
@@ -176,6 +184,7 @@ void processing(void)
             }
         }
     }
+    printf("\n出力画像データを生成しました.\n");
 }
 
 void put_data(void)
@@ -184,7 +193,7 @@ void put_data(void)
     int len; //アラインメント用
     FILE *fp;
 
-    printf("出力ファイル名を入力してください：");
+    printf("\n出力ファイル名を入力してください：");
     scanf("%s", filename);
     fp = fopen(filename, "wb");
 
@@ -212,17 +221,18 @@ void put_data(void)
                 fputc(imgout[k][j][i], fp);
             }
         }
-    }
-
-    //4バイトアラインメント
-    if (width * height % 4 != 0) //画像サイズが4の倍数でないとき
-    {
-        len = 4 - ((width * height) % 4);
-        for (int i = 0; i < len; i++)
+        //ラインごとに4バイトのAlignmentを適用
+        if (width % 4 != 0)
         {
-            fputc(0, fp);
+            for (int i = 0; i < 4 - (width % 4); i++)
+            {
+                fputc(0, fp);
+            }
         }
     }
+
+    fclose(fp);
+    printf("ファイルをクローズしました\n");
 }
 
 //配列の4バイトを結合する
