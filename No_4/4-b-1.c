@@ -123,7 +123,7 @@ void get_data(void)
             for (int k = 0; k < 3; k++) //BGR
             {
                 c = fgetc(fp);
-                imgin[k][j][i] = (unsigned char)c;
+                imgin[k][i][j] = (unsigned char)c;
             }
         }
     }
@@ -142,7 +142,7 @@ void processing(void)
         {
             for (int j = 0; j < width; j++)
             {
-                printf("%02x ", imgin[2][j][i]);
+                printf("%02x ", imgin[2][i][j]);
             }
             printf("\n");
         }
@@ -152,7 +152,7 @@ void processing(void)
         {
             for (int j = 0; j < width; j++)
             {
-                printf("%02x ", imgin[1][j][i]);
+                printf("%02x ", imgin[1][i][j]);
             }
             printf("\n");
         }
@@ -162,7 +162,7 @@ void processing(void)
         {
             for (int j = 0; j < width; j++)
             {
-                printf("%02x ", imgin[0][j][i]);
+                printf("%02x ", imgin[0][i][j]);
             }
             printf("\n");
         }
@@ -179,7 +179,7 @@ void processing(void)
         {
             for (int k = 0; k < 3; k++) //BGR
             {
-                imgout[k][j][i] = imgin[k][j][i];
+                imgout[k][i][j] = imgin[k][i][j];
             }
         }
     }
@@ -216,7 +216,7 @@ void put_data(void)
         {
             for (int k = 0; k < 3; k++) //BGR
             {
-                fputc(imgout[k][j][i], fp);
+                fputc(imgout[k][i][j], fp);
             }
         }
     }
