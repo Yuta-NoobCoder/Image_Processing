@@ -35,7 +35,7 @@ void get_data(void)
     if (fp == NULL)
     {
         printf("ファイルをオープンできません.\n");
-        return;
+        exit(1);
     }
 
     printf("ファイルをオープンしました.\n");
@@ -162,7 +162,7 @@ void processing(void)
         {
             for (int j = 0; j < width; j++)
             {
-                printf("%02x ", imgin[2][i][j]);
+                printf("%02x ", imgin[2][j][i]);
             }
             printf("\n");
         }
@@ -190,7 +190,7 @@ void processing(void)
 void put_data(void)
 {
     char filename[20];
-    int len; //アラインメント用
+    int size, padding; //アラインメント用
     FILE *fp;
 
     printf("\n出力ファイル名を入力してください：");
@@ -200,7 +200,7 @@ void put_data(void)
     if (fp == NULL)
     {
         printf("ファイルをオープンできません.\n");
-        return;
+        exit(1);
     }
     printf("ファイルをオープンしました.\n");
 
@@ -221,13 +221,17 @@ void put_data(void)
                 fputc(imgout[k][j][i], fp);
             }
         }
-        //ラインごとに4バイトのAlignmentを適用
-        if (width % 4 != 0)
+    }
+
+    //4バイトアラインメント
+    size = 54 + width * height * 3;
+    padding = 4 - (size % 4);
+
+    if (size % 4 != 0)
+    {
+        for (int i = 0; i < padding; i++)
         {
-            for (int i = 0; i < 4 - (width % 4); i++)
-            {
-                fputc(0, fp);
-            }
+            fputc(0, fp);
         }
     }
 
