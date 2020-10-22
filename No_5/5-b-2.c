@@ -123,7 +123,6 @@ void rgb_to_ybr(void)
             imgin[2][i][j] = i_ycbcr[0]; //Y
             imgin[1][i][j] = i_ycbcr[1]; //Cb
             imgin[0][i][j] = i_ycbcr[2]; //Cr
-            printf("R : %d G : %d B : %d \n", i_ycbcr[2], i_ycbcr[1], i_ycbcr[0]);
 
             //変数をリセット
             d_ycbcr[0] = 0;
@@ -217,12 +216,11 @@ void ybr_to_rgb(void)
     //RGB化
     for (int i = 0; i < height; i++)
     {
-        printf("%d\n", height);
-        for (int j = 0; i < width; i++)
+        for (int j = 0; j < width; j++)
         {
             ycbcr[2] = imgout[2][i][j]; //Y
-            ycbcr[1] = imgout[1][i][j]; //Cb
-            ycbcr[0] = imgout[0][i][j]; //Cr
+            ycbcr[1] = imgout[1][i][j] - 128.0; //Cb
+            ycbcr[0] = imgout[0][i][j] - 128.0; //Cr
 
             for (int i = 0; i < 3; i++)
             {
@@ -231,13 +229,13 @@ void ybr_to_rgb(void)
                     switch (j)
                     {
                     case 0:
-                        d_rgb[i] += ycbcr[0] * factor[i][j];
+                        d_rgb[i] += ycbcr[2] * factor[i][j];
                         break;
                     case 1:
                         d_rgb[i] += ycbcr[1] * factor[i][j];
                         break;
                     case 2:
-                        d_rgb[i] += ycbcr[2] * factor[i][j];
+                        d_rgb[i] += ycbcr[0] * factor[i][j];
                         break;
                     }
                 }
@@ -258,10 +256,9 @@ void ybr_to_rgb(void)
                     i_rgb[i] = 255;
             }
             //変換結果を上書き
-            imgout[2][i][j] = i_rgb[2]; //Y
-            imgout[1][i][j] = i_rgb[1]; //Cb
-            imgout[0][i][j] = i_rgb[0]; //Cr
-            printf("R : %d G : %d B : %d \n", i_rgb[2], i_rgb[1], i_rgb[0]);
+            imgout[2][i][j] = i_rgb[0]; //B
+            imgout[1][i][j] = i_rgb[1]; //G
+            imgout[0][i][j] = i_rgb[2]; //R
 
             //変数をリセット
             d_rgb[0] = 0;
@@ -333,19 +330,19 @@ void get_data(void)
     }
 
     //ファイルタイプの出力
-    printf("\n< ファイルタイプ >\n");
-    print_header(header, 0, 2);
+    //printf("\n< ファイルタイプ >\n");
+    //print_header(header, 0, 2);
 
     //ファイルサイズの出力
     printf("\n< ファイルサイズ >\n");
     print_header(header, 2, 4);
 
-    //4変数をunsigned intに結合
+    ////4変数をunsigned intに結合
     int size = combine_4bytes(header, 2);
-    printf("%dバイト\n", size);
+    //printf("%dバイト\n", size);
 
-    printf("\n< 予約領域 >\n");
-    print_header(header, 6, 4);
+    //printf("\n< 予約領域 >\n");
+    //print_header(header, 6, 4);
 
     printf("\n< オフセット >\n");
     print_header(header, 10, 4);
@@ -353,8 +350,8 @@ void get_data(void)
     int offset = combine_4bytes(header, 10);
     printf("%dバイト\n", offset);
 
-    printf("\n< 情報ヘッダサイズ >\n");
-    print_header(header, 14, 4);
+    //printf("\n< 情報ヘッダサイズ >\n");
+    //print_header(header, 14, 4);
 
     printf("\n< 画像の幅 >\n");
     print_header(header, 18, 4);
@@ -368,33 +365,33 @@ void get_data(void)
     height = combine_4bytes(header, 22);
     printf("%d ライン\n", height);
 
-    printf("\n< 色プレーン数 >\n");
-    print_header(header, 26, 2);
+    //printf("\n< 色プレーン数 >\n");
+    //print_header(header, 26, 2);
 
-    printf("\n< 1画素あたりのビット数 >\n");
-    print_header(header, 28, 2);
+    //printf("\n< 1画素あたりのビット数 >\n");
+    //print_header(header, 28, 2);
 
     //2変数を結合
     int bits = 256 * header[29] + header[28];
     printf("%d ビット\n", bits);
 
-    printf("\n< 圧縮方式 >\n");
-    print_header(header, 30, 4);
+    //printf("\n< 圧縮方式 >\n");
+    //print_header(header, 30, 4);
 
-    printf("\n< 画像データサイズ >\n");
-    print_header(header, 34, 4);
+    //printf("\n< 画像データサイズ >\n");
+    //print_header(header, 34, 4);
 
-    printf("\n< 水平解像度 >\n");
-    print_header(header, 38, 4);
+    //printf("\n< 水平解像度 >\n");
+    //print_header(header, 38, 4);
 
-    printf("\n< 垂直解像度 >\n");
-    print_header(header, 42, 4);
+    //printf("\n< 垂直解像度 >\n");
+    //print_header(header, 42, 4);
 
-    printf("\n< 色数 >\n");
-    print_header(header, 46, 4);
+    //printf("\n< 色数 >\n");
+    //print_header(header, 46, 4);
 
-    printf("\n< 重要な色数 >\n");
-    print_header(header, 50, 4);
+    //printf("\n< 重要な色数 >\n");
+    //print_header(header, 50, 4);
 
     printf("\n< 挿入ビット数 >\n");
     insert_bits = size - offset - width * height * (bits / 8);
