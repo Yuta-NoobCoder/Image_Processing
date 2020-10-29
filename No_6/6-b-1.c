@@ -437,7 +437,7 @@ void processing(void)
                     break;
 
                 case 2: //Y
-                    imgout[k][i][j] = isFixed_Y == 0 ? 0 : imgin[k][i][j];
+                    imgout[k][i][j] = isFixed_Y == 0 ? 128 : imgin[k][i][j];
                     break;
                 }
             }
