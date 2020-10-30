@@ -408,7 +408,6 @@ void get_data(void)
 
 void processing(void)
 {
-
     //上下
     for (int i = height - 1; i >= 0; i--) //Height
     {
@@ -421,17 +420,17 @@ void processing(void)
                 {
                     imgout[k][i][j] = k == 2 ? imgin[k][i][j] : 128; //輝度信号Yのみコピー
                 }
-                //右上 (左上の左右反転) 
+                //右上 (左上のコピー) 
                 if (i <= height / 2 && j >= width / 2)
                 {
                     imgout[k][i][j] = k == 2 ? imgin[k][i][j - width / 2] : 128; 
                 }
-                //右下 (右上の上下反転) 
+                //右下 (左右上下反転) 
                 if (i >= height / 2 && j >= width / 2)
                 {
                     imgout[k][i][j] = k == 2 ? imgin[k][height / 2 - (i - height / 2)][width / 2 - (j - width / 2)] : 128; 
                 }
-                //左下 (左上の上下反転) 
+                //左下 (上下反転) 
                 if (i >= height / 2 && j <= width / 2)
                 {
                     imgout[k][i][j] = k == 2 ? imgin[k][height - i -1][j] : 128; 
