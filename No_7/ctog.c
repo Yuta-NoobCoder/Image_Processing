@@ -431,7 +431,7 @@ void put_data(char *filename)
         printf("出力ファイル名が入力されていないか、誤りがあります。\n");
         exit(1);
     }
-    printf("ファイルをオープンしました.\n");
+    printf("\nファイルをオープンしました.\n");
 
     //ヘッダーの書き出し
     for (int i = 0; i < 54; i++)
