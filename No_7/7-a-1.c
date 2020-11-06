@@ -383,7 +383,7 @@ void get_data(char *filename)
     //printf("\n< 重要な色数 >\n");
     //print_header(header, 50, 4);
 
-    /printf("\n< 挿入ビット数 >\n");
+    printf("\n< 挿入ビット数 >\n");
     insert_bits = size - offset - width * height * (bits / 8);
     printf("%d バイト\n", insert_bits);
 
