@@ -334,11 +334,11 @@ void get_data(char *filename)
     //printf("\n< 予約領域 >\n");
     //print_header(header, 6, 4);
 
-    //printf("\n< オフセット >\n");
+    printf("\n< オフセット >\n");
     //print_header(header, 10, 4);
 
     int offset = combine_4bytes(header, 10);
-    //printf("%dバイト\n", offset);
+    printf("%dバイト\n", offset);
 
     //printf("\n< 情報ヘッダサイズ >\n");
     //print_header(header, 14, 4);
@@ -358,12 +358,12 @@ void get_data(char *filename)
     //printf("\n< 色プレーン数 >\n");
     //print_header(header, 26, 2);
 
-    //printf("\n< 1画素あたりのビット数 >\n");
+    printf("\n< 1画素あたりのビット数 >\n");
     //print_header(header, 28, 2);
 
     //2変数を結合
     int bits = 256 * header[29] + header[28];
-    //printf("%d ビット\n", bits);
+    printf("%d ビット\n", bits);
 
     //printf("\n< 圧縮方式 >\n");
     //print_header(header, 30, 4);
@@ -383,9 +383,9 @@ void get_data(char *filename)
     //printf("\n< 重要な色数 >\n");
     //print_header(header, 50, 4);
 
-    //printf("\n< 挿入ビット数 >\n");
+    /printf("\n< 挿入ビット数 >\n");
     insert_bits = size - offset - width * height * (bits / 8);
-    //printf("%d バイト\n", insert_bits);
+    printf("%d バイト\n", insert_bits);
 
     //画像データの読み出し
     for (int i = height - 1; i >= 0; i--) //Height
