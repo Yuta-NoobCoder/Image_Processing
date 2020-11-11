@@ -438,7 +438,7 @@ void processing(void)
                         {
                             for (int m = 0; m < block_size; m++)
                             {
-                                imgout[k][i + l][j + m] += average;
+                                imgout[k][i + l][j + m] = average;
                             }
                         }
                     }
@@ -448,7 +448,7 @@ void processing(void)
                         {
                             for (int m = 0; m < block_size; m++)
                             {
-                                imgout[k][i + l][j + m] += 128;
+                                imgout[k][i + l][j + m] = 128;
                             }
                         }
                     }
