@@ -408,6 +408,7 @@ void processing(void)
 {
     int block_size;
     int sum, average;
+    double raw_average;
 
     printf("\nブロックサイズを入力してください(2, 4, 8, 16) : ");
     scanf("%d", &block_size);
@@ -431,7 +432,8 @@ void processing(void)
                                 sum += imgin[k][i + l][j + m];
                             }
                         }
-                        average = sum / (block_size * block_size);
+                        raw_average = sum / (block_size * block_size);
+                        average = (int)(raw_average + 0.5); //四捨五入
 
                         //平均値に置き換え
                         for (int l = 0; l < block_size; l++)
