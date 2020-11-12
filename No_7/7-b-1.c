@@ -410,8 +410,12 @@ void processing(void)
     int sum, average;
     double raw_average;
 
-    printf("\nブロックサイズを入力してください(2, 4, 8, 16) : ");
-    scanf("%d", &block_size);
+    //2, 4, 8, 16の場合のみ実行
+    do
+    {
+        printf("\nブロックサイズを入力してください(2, 4, 8, 16) : ");
+        scanf("%d", &block_size);
+    } while (block_size != 2 && block_size != 4 && block_size != 8 && block_size != 16);
 
     for (int i = 0; i < height; i += block_size)
     { //Height
