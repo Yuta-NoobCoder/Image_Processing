@@ -447,7 +447,7 @@ void processing(void)
                         {
                             if (imgin[k][i][j] >= threshold[l])
                             {
-                                if (l == level - 1) //最大の閾値以上の場合は255との平均
+                                if (l == level - 2) //最大の閾値以上の場合は255との平均
                                 {
                                     imgout[k][i][j] = (threshold[l] + 255) / 2;
                                 }
