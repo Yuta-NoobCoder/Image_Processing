@@ -425,7 +425,6 @@ void processing(void)
     {
         sum += per_level;
         threshold[i] = (int)sum;
-        printf("%d\n", threshold[i]);
     }
 
     //Height
