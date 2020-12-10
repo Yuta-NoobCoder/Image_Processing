@@ -457,7 +457,7 @@ void put_data(char *filename)
     }
 
     fclose(fp);
-    printf("ファイルをクローズしました\n");
+    //printf("ファイルをクローズしました\n");
 }
 
 void processing(char *char_threshold)
