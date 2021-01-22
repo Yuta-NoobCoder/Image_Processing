@@ -456,6 +456,7 @@ void processing(void)
 {
     double x, y;
     double s, t, r0, r1, p;
+    int fixed_x, fixed_y;
     double rate;
 
     printf("\n拡大縮小率を入力してください : ");
@@ -477,8 +478,11 @@ void processing(void)
                         s = x - floor(x);
                         t = y - floor(y);
 
-                        r0 = (1 - s) * imgin[k][(int)floor(y)][(int)floor(x)] + s * imgin[k][(int)floor(y)][(int)floor(x) + 1];
-                        r1 = (1 - s) * imgin[k][(int)floor(y) + 1][(int)floor(x)] + s * imgin[k][(int)floor(y) + 1][(int)floor(x) + 1];
+                        fixed_x = (int)floor(x);
+                        fixed_y = (int)floor(y);
+
+                        r0 = (1 - s) * imgin[k][fixed_y][fixed_x] + s * imgin[k][fixed_y][(int)floor(x) + 1];
+                        r1 = (1 - s) * imgin[k][fixed_y + 1][fixed_x] + s * imgin[k][fixed_y + 1][fixed_x + 1];
 
                         p = (1 - t) * r0 + t * r1;
 
